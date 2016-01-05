@@ -20,4 +20,3 @@ Every time you call the method the follow output will appear
 ### Todo ###
 - Class annotation to log every method of a class
 - Log every variable change whitin the method
-- Sample project
