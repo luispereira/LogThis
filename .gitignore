@@ -15,3 +15,6 @@
 .idea/modules.xml
 .idea/runConfigurations.xml
 
+privateKey.asc
+private_key_sender.asc
+public_key_sender.asc

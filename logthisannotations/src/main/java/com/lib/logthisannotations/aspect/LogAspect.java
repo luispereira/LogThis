@@ -3,9 +3,9 @@ package com.lib.logthisannotations.aspect;
 import com.lib.logthisannotations.internal.LogThis;
 import com.lib.logthisannotations.internal.Strings;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
@@ -26,8 +26,9 @@ public class LogAspect {
     @Pointcut(POINTCUT_CONSTRUCTOR)
     public void constructorAnnotatedDebugTrace() {}
 
-    @Around("methodAnnotatedWithDebugTrace() || constructorAnnotatedDebugTrace()")
-    public Object weaveJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
+
+    @Before("methodAnnotatedWithDebugTrace() || constructorAnnotatedDebugTrace()")
+    public void weaveJoinPoint(JoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String className = methodSignature.getDeclaringType().getSimpleName();
         String methodName = methodSignature.getName();
@@ -46,7 +47,6 @@ public class LogAspect {
         builder.append(')');
 
         LogThis.log(className, "Method " + builder.toString() + " called");
-        return joinPoint.proceed();
     }
 }
 
