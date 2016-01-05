@@ -30,6 +30,7 @@ dependencies {
             println compilationType.key + " '" + libUrl + "'"
         }
     }
+    compile project(path: ':logthisannotations')
 }
 
 final def log = project.logger

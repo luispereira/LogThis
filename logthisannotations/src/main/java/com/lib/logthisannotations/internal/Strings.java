@@ -1,4 +1,4 @@
-package com.lib.mylibrary.internal;
+package com.lib.logthisannotations.internal;
 
 import java.util.Arrays;
 import java.util.HashSet;

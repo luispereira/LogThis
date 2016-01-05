@@ -1,7 +1,7 @@
-package com.lib.mylibrary.aspect;
+package com.lib.logthisannotations.aspect;
 
-import com.lib.mylibrary.internal.LogThis;
-import com.lib.mylibrary.internal.Strings;
+import com.lib.logthisannotations.internal.LogThis;
+import com.lib.logthisannotations.internal.Strings;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -15,10 +15,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 @Aspect
 public class LogAspect {
     private static final String POINTCUT_METHOD =
-            "execution(@com.lib.mylibrary.annotation.LogThis * *(..))";
+            "execution(@com.lib.logthisannotations.annotation.LogThis * *(..))";
 
     private static final String POINTCUT_CONSTRUCTOR =
-            "execution(@com.lib.mylibrary.annotation.LogThis *.new(..))";
+            "execution(@com.lib.logthisannotations.annotation.LogThis *.new(..))";
 
     @Pointcut(POINTCUT_METHOD)
     public void methodAnnotatedWithDebugTrace() {}

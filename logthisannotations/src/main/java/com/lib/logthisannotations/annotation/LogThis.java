@@ -1,4 +1,4 @@
-package com.lib.mylibrary.annotation;
+package com.lib.logthisannotations.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
