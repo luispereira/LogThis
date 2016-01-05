@@ -2,7 +2,7 @@
 
 ##### Log any method on android by simply using annotation @LogThis #####
 
-This should not be used to production environments yet.
+This should not be used in production environment yet.
 
 ### Usage ###
 >   @LogThis
