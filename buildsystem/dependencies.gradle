@@ -1,0 +1,50 @@
+ext {
+    //Android
+    androidBuildToolsVersion = "23.0.2"
+    androidMinSdkVersion = 14
+    androidMinTestSdkVersion = 21
+    androidTargetSdkVersion = 23
+    androidCompileSdkVersion = 23
+
+    //Libraries
+    aspectjVersion = '1.8.6'
+    androidAppCompatV7Version = '23.1.1'
+    jUnitVersion = '4.12'
+
+    //ClassPath
+    androidAptVersion = "1.8"
+    gradleVersion = "1.5.0"
+
+    dependencies = [
+            aspectj      : "org.aspectj:aspectjrt:${aspectjVersion}",
+            appCompat         : "com.android.support:appcompat-v7:${androidAppCompatV7Version}",
+            jUnit             : "junit:junit:${jUnitVersion}"
+    ]
+
+    classPathDependencies = [
+            gradle :  "com.android.tools.build:gradle:${gradleVersion}",
+            aspectjTools :  "org.aspectj:aspectjtools:${aspectjVersion}"
+    ]
+
+    logthisDependencies = [
+          compile           : [
+                  dependencies.aspectj,
+                  dependencies.appCompat
+        ],
+        testCompile : [
+                  dependencies.jUnit
+        ]
+    ]
+
+    appDependencies = [
+        compile           : [
+                  dependencies.aspectj,
+                  dependencies.appCompat
+        ],
+        testCompile : [
+                  dependencies.jUnit
+        ]
+    ]
+}
+
+

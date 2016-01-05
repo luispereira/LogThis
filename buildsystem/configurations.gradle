@@ -1,0 +1,4 @@
+ext {
+    logthisVersionName = "0.1"
+    logthisVersionCode = 1
+}

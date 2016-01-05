@@ -2,27 +2,18 @@ import org.aspectj.bridge.IMessage
 import org.aspectj.bridge.MessageHandler
 import org.aspectj.tools.ajc.Main
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'org.aspectj:aspectjtools:1.8.1'
-    }
-}
-
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    buildToolsVersion rootProject.ext.androidBuildToolsVersion
 
     defaultConfig {
         applicationId "com.lib.logthis"
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.androidMinSdkVersion
+        targetSdkVersion rootProject.ext.androidTargetSdkVersion
+        versionCode rootProject.ext.logthisVersionCode
+        versionName rootProject.ext.logthisVersionName
     }
     buildTypes {
         release {
@@ -33,10 +24,12 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'org.aspectj:aspectjrt:1.8.1'
+    rootProject.ext.appDependencies.each { def compilationType ->
+        compilationType.value.each { def libUrl ->
+            invokeMethod(compilationType.key, libUrl)
+            println compilationType.key + " '" + libUrl + "'"
+        }
+    }
 }
 
 final def log = project.logger
