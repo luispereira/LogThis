@@ -28,11 +28,7 @@ ext {
 
     logthisDependencies = [
           compile           : [
-                  dependencies.aspectj,
-                  dependencies.appCompat
-        ],
-        testCompile : [
-                  dependencies.jUnit
+                  dependencies.aspectj
         ]
     ]
 

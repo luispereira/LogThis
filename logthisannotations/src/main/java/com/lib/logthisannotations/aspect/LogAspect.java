@@ -26,9 +26,8 @@ public class LogAspect {
     @Pointcut(POINTCUT_CONSTRUCTOR)
     public void constructorAnnotatedDebugTrace() {}
 
-
     @Before("methodAnnotatedWithDebugTrace() || constructorAnnotatedDebugTrace()")
-    public void weaveJoinPoint(JoinPoint joinPoint) throws Throwable {
+    public void weaveJoinPoint(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String className = methodSignature.getDeclaringType().getSimpleName();
         String methodName = methodSignature.getName();

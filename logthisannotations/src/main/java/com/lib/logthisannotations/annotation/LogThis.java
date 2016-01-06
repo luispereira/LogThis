@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * @author lpereira on 04/01/2016.
  */
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.CONSTRUCTOR, ElementType.METHOD})
 public @interface LogThis {
 }
