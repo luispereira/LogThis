@@ -9,27 +9,29 @@ This should not be used in production environment yet.
     repositories {
         jcenter()
     }
-    
-   compile 'com.github.luispereira:logthisannotations:0.1.3' 
+
+   compile 'com.github.luispereira:logthisannotations:0.2.0'
 ```
 
 ### Usage ###
-```java   
+```java
 @LogThis
-public void logThisMethod(String value) {
+public String logThisMethod(String value) {
   //...
+  return "value";
  }
 
- logThisMethod("test") 
+ logThisMethod("test")
 ```
 
 ### Output ###
-Every time you call the method the follow output will appear
+Every time you call the method the follow output will appear:
 ```java
 com.lib.logthis D/Class: Method -> logThisMethod(value="test") called
+com.lib.logthis D/Class: Method -> logThisMethod(value="test") returned value -> [value]
 ```
+Method which have the return generic type void will not print the return result.
 
 ### Todo ###
 - Class annotation to log every method of a class
-- Log every variable change whitin the method
 - Create a method to enable and disable the log
