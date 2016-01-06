@@ -9,7 +9,7 @@ import java.util.Set;
  * @author lpereira on 04/01/2016.
  */
 public final class Strings {
-    public static String toString(Object obj) {
+    private static String toString(Object obj) {
         if (obj == null) {
             return "null";
         }
@@ -158,5 +158,19 @@ public final class Strings {
 
     private Strings() {
         throw new AssertionError("No instances.");
+    }
+
+    public static StringBuilder getStringBuilder(String methodName, String[] parameterNames, Object[] parameterValues) {
+        StringBuilder builder = new StringBuilder("\u21E2 ");
+        builder.append(methodName).append('(');
+        for (int i = 0; i < parameterValues.length; i++) {
+            if (i > 0) {
+                builder.append(", ");
+            }
+            builder.append(parameterNames[i]).append('=');
+            builder.append(toString(parameterValues[i]));
+        }
+        builder.append(')');
+        return builder;
     }
 }

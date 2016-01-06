@@ -8,6 +8,11 @@ import java.lang.annotation.Target;
 /**
  * @author lpereira on 04/01/2016.
  */
+
+/**
+ * This annotation will log a method and its parameters whenever its called
+ * Additionally it will log the returning value if the method does not have a generic return type of void
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.CONSTRUCTOR, ElementType.METHOD})
 public @interface LogThis {
