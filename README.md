@@ -10,7 +10,7 @@ This should not be used in production environment yet.
         jcenter()
     }
     
-   compile 'com.github.luispereira:logthisannotations:0.1.0' 
+   compile 'com.github.luispereira:logthisannotations:0.1.3' 
 ```
 
 ### Usage ###
