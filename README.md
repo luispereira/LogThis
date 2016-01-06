@@ -4,6 +4,9 @@
 
 This should not be used in production environment yet.
 
+### Installation ###
+ >  compile 'com.github.luispereira:logthisannotations:0.1.0'
+
 ### Usage ###
 >   @LogThis
     public void logThisMethod(String value) {
@@ -12,9 +15,6 @@ This should not be used in production environment yet.
 
 </br>
 >   logThisMethod("test")
-
-### Installation ###
- >  compile 'com.github.luispereira:logthisannotations:0.1.0'
 
 ### Output ###
 Every time you call the method the follow output will appear
