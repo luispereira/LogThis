@@ -13,6 +13,9 @@ This should not be used in production environment yet.
 </br>
 >   logThisMethod("test")
 
+### Installation ###
+ >  compile 'com.github.luispereira:logthisannotations:0.1.0'
+
 ### Output ###
 Every time you call the method the follow output will appear
 > com.lib.logthis D/Class: Method -> logThisMethod(value="test") called
