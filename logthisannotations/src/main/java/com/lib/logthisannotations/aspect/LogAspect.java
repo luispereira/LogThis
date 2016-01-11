@@ -2,6 +2,7 @@ package com.lib.logthisannotations.aspect;
 
 import android.text.TextUtils;
 
+import com.lib.logthisannotations.Logger;
 import com.lib.logthisannotations.internal.LogThis;
 import com.lib.logthisannotations.internal.Strings;
 
@@ -38,22 +39,27 @@ public class LogAspect {
 
     @Around("methodAnnotatedWithDebugTrace()")
     public Object weaveAroundLogThisJoinPoint(ProceedingJoinPoint thisJoinPoint) throws Throwable {
-        MethodSignature methodSignature = (MethodSignature) thisJoinPoint.getSignature();
-        String className = methodSignature.getDeclaringType().getSimpleName();
-        String methodName = methodSignature.getName();
-        String[] parameterNames = methodSignature.getParameterNames();
-        Object[] parameterValues = thisJoinPoint.getArgs();
+        Object returnValue;
+        if(Logger.getInstance() != null && Logger.getInstance().isLoggerEnabled()) {
+            MethodSignature methodSignature = (MethodSignature) thisJoinPoint.getSignature();
+            String className = methodSignature.getDeclaringType().getSimpleName();
+            String methodName = methodSignature.getName();
+            String[] parameterNames = methodSignature.getParameterNames();
+            Object[] parameterValues = thisJoinPoint.getArgs();
 
-        Type type = methodSignature.getMethod().getGenericReturnType();
+            Type type = methodSignature.getMethod().getGenericReturnType();
 
-        StringBuilder builder = Strings.getStringBuilder(methodName, parameterNames, parameterValues);
+            StringBuilder builder = Strings.getStringBuilder(methodName, parameterNames, parameterValues);
 
-        LogThis.log(className, "Method " + builder.toString() + " called");
+            LogThis.log(className, "Method " + builder.toString() + " called");
 
-        Object returnValue = thisJoinPoint.proceed();
+            returnValue = thisJoinPoint.proceed();
 
-        if (!TextUtils.equals(type.toString(), VOID_TYPE)) {
-            LogThis.log(className, "Method " + builder.toString() + " returned value ⇢ [" + returnValue + "]");
+            if (!TextUtils.equals(type.toString(), VOID_TYPE)) {
+                LogThis.log(className, "Method " + builder.toString() + " returned value ⇢ [" + returnValue + "]");
+            }
+        }else{
+            returnValue = thisJoinPoint.proceed();
         }
         return returnValue;
     }

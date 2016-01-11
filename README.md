@@ -14,6 +14,16 @@ This should not be used in production environment yet.
 ```
 
 ### Usage ###
+In order to activate the Logger you should call the following method on Application
+```java
+ if(BuildConfig.DEBUG) { //This verification is only an example to only call the logger on debug environment
+    Logger.init();
+ }
+```
+
+From now on the methods with annotation @LogThis will be logged
+
+
 ```java
 @LogThis
 public String logThisMethod(String value) {
@@ -34,4 +44,3 @@ Method which have the return generic type void will not print the return result.
 
 ### Todo ###
 - Class annotation to log every method of a class
-- Create a method to enable and disable the log
