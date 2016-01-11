@@ -10,7 +10,7 @@ This should not be used in production environment yet.
         jcenter()
     }
 
-   compile 'com.github.luispereira:logthisannotations:0.3.0'
+   compile 'com.github.luispereira:logthisannotations:0.3.1'
 ```
 
 ### Usage ###
@@ -25,7 +25,7 @@ From now on the methods with annotation @LogThis will be logged
 
 
 ```java
-@LogThis
+@LogThis(LoggerLevel.V) //The default value is LoggerLevel.D
 public String logThisMethod(String value) {
   //...
   return "value";
@@ -44,3 +44,5 @@ Method which have the return generic type void will not print the return result.
 
 ### Todo ###
 - Class annotation to log every method of a class
+- Field annotation to log a field when called
+- Provide an api method to write the logs on the sdcard

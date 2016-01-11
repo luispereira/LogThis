@@ -37,7 +37,7 @@ public class LogAspect {
     @Pointcut(POINTCUT_CONSTRUCTOR)
     public void constructorAnnotatedDebugTrace() {
     }
-    
+
     @Around("methodAnnotatedWithDebugTrace()")
     public Object weaveAroundLogThisJoinPoint(ProceedingJoinPoint thisJoinPoint) throws Throwable {
         Object returnValue;
