@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.lib.logthisannotations.annotation.LogThis;
+import com.lib.logthisannotations.internal.LoggerLevel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @LogThis
+    @LogThis(LoggerLevel.E)
     public void logThisMethod(String value) {
         // ...
     }

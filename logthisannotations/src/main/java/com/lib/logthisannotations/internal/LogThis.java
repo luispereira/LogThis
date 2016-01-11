@@ -17,7 +17,26 @@ public class LogThis {
      * call occurs.
      * @param message The message you would like logged.
      */
-    public static void log(String tag, String message) {
-        Log.d(tag, message);
+    public static void log(String tag, String message, LoggerLevel loggerLevel) {
+        switch (loggerLevel){
+            case V:
+                Log.v(tag, message);
+                break;
+            case D:
+                Log.d(tag, message);
+                break;
+            case I:
+                Log.i(tag, message);
+                break;
+            case W:
+                Log.w(tag, message);
+                break;
+            case E:
+                Log.e(tag, message);
+                break;
+            case WTF:
+                Log.wtf(tag, message);
+                break;
+        }
     }
 }

@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.lib.logthisannotations.Logger;
 import com.lib.logthisannotations.internal.LogThis;
+import com.lib.logthisannotations.internal.LoggerLevel;
 import com.lib.logthisannotations.internal.Strings;
 
 import org.aspectj.lang.JoinPoint;
@@ -14,6 +15,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 /**
@@ -35,8 +37,7 @@ public class LogAspect {
     @Pointcut(POINTCUT_CONSTRUCTOR)
     public void constructorAnnotatedDebugTrace() {
     }
-
-
+    
     @Around("methodAnnotatedWithDebugTrace()")
     public Object weaveAroundLogThisJoinPoint(ProceedingJoinPoint thisJoinPoint) throws Throwable {
         Object returnValue;
@@ -47,16 +48,19 @@ public class LogAspect {
             String[] parameterNames = methodSignature.getParameterNames();
             Object[] parameterValues = thisJoinPoint.getArgs();
 
-            Type type = methodSignature.getMethod().getGenericReturnType();
+            Method method = methodSignature.getMethod();
+            LoggerLevel loggerLevel = method.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
+
+            Type type = method.getGenericReturnType();
 
             StringBuilder builder = Strings.getStringBuilder(methodName, parameterNames, parameterValues);
 
-            LogThis.log(className, "Method " + builder.toString() + " called");
+            LogThis.log(className, "Method " + builder.toString() + " called", loggerLevel);
 
             returnValue = thisJoinPoint.proceed();
 
             if (!TextUtils.equals(type.toString(), VOID_TYPE)) {
-                LogThis.log(className, "Method " + builder.toString() + " returned value ⇢ [" + returnValue + "]");
+                LogThis.log(className, "Method " + builder.toString() + " returned value ⇢ [" + returnValue + "]", loggerLevel);
             }
         }else{
             returnValue = thisJoinPoint.proceed();
@@ -72,9 +76,12 @@ public class LogAspect {
         String[] parameterNames = methodSignature.getParameterNames();
         Object[] parameterValues = joinPoint.getArgs();
 
+        Method method = methodSignature.getMethod();
+        LoggerLevel loggerLevel = method.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
+
         StringBuilder builder = Strings.getStringBuilder(methodName, parameterNames, parameterValues);
 
-        LogThis.log(className, "Method " + builder.toString() + " called");
+        LogThis.log(className, "Method " + builder.toString() + " called", loggerLevel);
     }
 }
 
