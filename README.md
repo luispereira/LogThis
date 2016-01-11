@@ -46,3 +46,4 @@ Method which have the return generic type void will not print the return result.
 - Class annotation to log every method of a class
 - Field annotation to log a field when called
 - Provide an api method to write the logs on the sdcard
+- Avoid any code on application class by creating a new module in order to enable the logger
