@@ -2,15 +2,13 @@
 
 ##### Log any method on android by simply using annotation @LogThis #####
 
-This should not be used in production environment yet.
-
 ### Installation ###
 ```groovy
     repositories {
         jcenter()
     }
 
-   compile 'com.github.luispereira:logthisannotations:0.3.1'
+   compile 'com.github.luispereira:logthisannotations:0.4.0'
 ```
 
 ### Usage ###
@@ -34,6 +32,29 @@ public String logThisMethod(String value) {
  logThisMethod("test")
 ```
 
+It is also possible to Log every field change:
+
+```java
+@LogThis
+public String mSampleField = "test1";
+
+...
+
+mSampleField = "test2";
+```
+
+Or you can log every field of a class:
+```java
+@LogThisClassFields(LoggerLevel.I)
+public class SampleClass{
+
+   private String mValue;
+   public int otherField = 0;
+
+}
+```
+In this case every field on the class will be logged.
+
 ### Output ###
 Every time you call the method the follow output will appear:
 ```java
@@ -42,7 +63,11 @@ com.lib.logthis D/Class: Method -> logThisMethod(value="test") returned value ->
 ```
 Method which have the return generic type void will not print the return result.
 
+Or in case of a field log:
+```java
+com.lib.logthis D/Class: Field ⇢ mSampleField -> oldValue=test1 0 & newValue=test2
+```
+
 ### Todo ###
-- Class annotation to log every method of a class
-- Field annotation to log a field when called
+- Field annotation to log a local variable when modified
 - Provide an api method to write the logs on the sdcard
