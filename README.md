@@ -71,3 +71,4 @@ com.lib.logthis D/Class: Field ⇢ mSampleField -> oldValue=test1 0 & newValue=t
 ### Todo ###
 - Field annotation to log a local variable when modified
 - Provide an api method to write the logs on the sdcard
+- Avoid any code on application class by creating a new module in order to enable the logger
