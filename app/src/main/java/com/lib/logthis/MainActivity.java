@@ -5,9 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.lib.logthisannotations.annotation.LogThis;
+import com.lib.logthisannotations.annotation.LogThisClassFields;
 import com.lib.logthisannotations.internal.LoggerLevel;
 
+@LogThisClassFields(LoggerLevel.W)
 public class MainActivity extends AppCompatActivity {
+
+    @LogThis
+    public String mSampleField;
+
+    private int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +27,18 @@ public class MainActivity extends AppCompatActivity {
                 String value = "test";
                 logThisMethod(value);
                 logThisReturnMethod();
+
+                mSampleField = "supppp " + (i++);
             }
         });
     }
 
-    @LogThis(LoggerLevel.E)
+//    @LogThis(LoggerLevel.E)
     public void logThisMethod(String value) {
         // ...
     }
 
-    @LogThis
+//    @LogThis
     public String logThisReturnMethod() {
         return "testing return value";
     }

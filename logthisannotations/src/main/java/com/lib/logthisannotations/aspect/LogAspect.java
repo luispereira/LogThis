@@ -13,8 +13,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.FieldSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
@@ -24,6 +26,7 @@ import java.lang.reflect.Type;
 @Aspect
 public class LogAspect {
     private static final String VOID_TYPE = "void";
+
     private static final String POINTCUT_METHOD =
             "execution(@com.lib.logthisannotations.annotation.LogThis * *(..))";
 
@@ -53,7 +56,7 @@ public class LogAspect {
 
             Type type = method.getGenericReturnType();
 
-            StringBuilder builder = Strings.getStringBuilder(methodName, parameterNames, parameterValues);
+            StringBuilder builder = Strings.getStringMethodBuilder(methodName, parameterNames, parameterValues);
 
             LogThis.log(className, "Method " + builder.toString() + " called", loggerLevel);
 
@@ -79,9 +82,23 @@ public class LogAspect {
         Method method = methodSignature.getMethod();
         LoggerLevel loggerLevel = method.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
 
-        StringBuilder builder = Strings.getStringBuilder(methodName, parameterNames, parameterValues);
+        StringBuilder builder = Strings.getStringMethodBuilder(methodName, parameterNames, parameterValues);
 
         LogThis.log(className, "Method " + builder.toString() + " called", loggerLevel);
+    }
+
+    @Around("set(@com.lib.logthisannotations.annotation.LogThis * *) && args(newVal) && target(t)")
+    public void weaveBeforeFieldLogThisJoinPoint(ProceedingJoinPoint joinPoint, Object t, Object newVal) throws Throwable {
+        FieldSignature fs = (FieldSignature) joinPoint.getSignature();
+        String fieldName = fs.getName();
+        Field field = fs.getField();
+        field.setAccessible(true);
+        Object oldVal = field.get(t);
+        LoggerLevel loggerLevel = field.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
+        StringBuilder builder = Strings.getStringFieldBuilder(fieldName, String.valueOf(oldVal), String.valueOf(newVal));
+
+        LogThis.log(t.getClass().getName(), "Field " + builder.toString(), loggerLevel);
+        joinPoint.proceed();
     }
 }
 

@@ -16,7 +16,7 @@ ext {
     gradleVersion = "1.5.0"
 
     dependencies = [
-            aspectj      : "org.aspectj:aspectjrt:${aspectjVersion}",
+            aspectj           : "org.aspectj:aspectjrt:${aspectjVersion}",
             appCompat         : "com.android.support:appcompat-v7:${androidAppCompatV7Version}",
             jUnit             : "junit:junit:${jUnitVersion}"
     ]

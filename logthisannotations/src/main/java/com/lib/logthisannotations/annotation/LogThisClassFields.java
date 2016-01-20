@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * Additionally it will log the returning value if the method does not have a generic return type of void
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.FIELD})
-public @interface LogThis {
+@Target({ElementType.TYPE})
+public @interface LogThisClassFields {
     LoggerLevel value() default LoggerLevel.D;
 }

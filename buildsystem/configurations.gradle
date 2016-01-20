@@ -1,4 +1,4 @@
 ext {
-    logthisVersionName = "0.3.1"
-    logthisVersionCode = 31
+    logthisVersionName = "0.4.0"
+    logthisVersionCode = 40
 }

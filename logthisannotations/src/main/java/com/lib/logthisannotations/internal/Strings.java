@@ -160,7 +160,7 @@ public final class Strings {
         throw new AssertionError("No instances.");
     }
 
-    public static StringBuilder getStringBuilder(String methodName, String[] parameterNames, Object[] parameterValues) {
+    public static StringBuilder getStringMethodBuilder(String methodName, String[] parameterNames, Object[] parameterValues) {
         StringBuilder builder = new StringBuilder("\u21E2 ");
         builder.append(methodName).append('(');
         for (int i = 0; i < parameterValues.length; i++) {
@@ -171,6 +171,14 @@ public final class Strings {
             builder.append(toString(parameterValues[i]));
         }
         builder.append(')');
+        return builder;
+    }
+
+    public static StringBuilder getStringFieldBuilder(String fieldName, String oldValue, String newValue) {
+        StringBuilder builder = new StringBuilder("\u21E2 ");
+        builder.append(fieldName);
+        builder.append(" -> oldValue=").append(oldValue);
+        builder.append(" & newValue=").append(newValue);
         return builder;
     }
 }
