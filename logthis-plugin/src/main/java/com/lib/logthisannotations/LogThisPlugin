@@ -1,0 +1,29 @@
+package com.lib.logthisannotations
+
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+import org.gradle.api.tasks.compile.JavaCompile
+
+class LogThisPlugin implements Plugin<Project> {
+    @Override void apply(Project project) {
+        project.dependencies {
+            compile 'com.github.luispereira:logthisannotations:0.4.+'
+        }
+
+        variants.all { variant ->
+            JavaCompile javaCompile = variant.javaCompile
+            javaCompile.doLast {
+                String[] args = [
+                        "-showWeaveInfo",
+                        "-1.5",
+                        "-inpath", javaCompile.destinationDir.toString(),
+                        "-aspectpath", javaCompile.classpath.asPath,
+                        "-d", javaCompile.destinationDir.toString(),
+                        "-classpath", javaCompile.classpath.asPath,
+                        "-bootclasspath", project.android.bootClasspath.join(File.pathSeparator)
+                ]
+                log.debug "ajc args: " + Arrays.toString(args)
+            }
+        }
+    }
+}

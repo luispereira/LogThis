@@ -1,0 +1,15 @@
+apply plugin: 'groovy'
+
+targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+    rootProject.ext.logthisPluginDependencies.each { def compilationType ->
+        compilationType.value.each { def libUrl ->
+            invokeMethod(compilationType.key, libUrl)
+            println compilationType.key + " '" + libUrl + "'"
+        }
+    }
+    compile gradleApi()
+    compile localGroovy()
+}

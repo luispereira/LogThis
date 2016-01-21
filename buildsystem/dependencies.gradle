@@ -32,6 +32,14 @@ ext {
         ]
     ]
 
+    logthisPluginDependencies = [
+            compile           : [
+                    dependencies.aspectjTools,
+                    dependencies.aspectj,
+                    dependencies.gradle
+            ]
+    ]
+
     appDependencies = [
         compile           : [
                   dependencies.aspectj,
