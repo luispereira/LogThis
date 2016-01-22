@@ -34,9 +34,9 @@ ext {
 
     logthisPluginDependencies = [
             compile           : [
-                    dependencies.aspectjTools,
+                    classPathDependencies.aspectjTools,
                     dependencies.aspectj,
-                    dependencies.gradle
+                    classPathDependencies.gradle
             ]
     ]
 
