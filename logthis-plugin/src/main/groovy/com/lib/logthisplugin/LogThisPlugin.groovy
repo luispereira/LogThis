@@ -28,7 +28,6 @@ class LogThisPlugin implements Plugin<Project> {
 
           project.dependencies {
             debugCompile 'org.aspectj:aspectjrt:1.8.6'
-            compile 'com.github.luispereira:logthisannotations:0.4.+'
           }
 
           variants.all { variant ->
