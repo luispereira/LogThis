@@ -4,11 +4,23 @@
 
 ### Installation ###
 ```groovy
-    repositories {
-        jcenter()
-    }
+   buildscript {
+     repositories {
+       jcenter()
+       maven {
+         url "https://plugins.gradle.org/m2/"
+       }
+     }
+     dependencies {
+       classpath "gradle.plugin.com.lib.logthisplugin:logthis-plugin:0.4.2" 
+     }
+   }
+   
+   apply plugin: "com.lib.logthisannotations"   //This will search the annotation and will process them
 
-   compile 'com.github.luispereira:logthisannotations:0.4.0'
+   dependencies {
+       compile 'com.github.luispereira:logthisannotations:0.4.2'
+   }
 ```
 
 ### Usage ###
