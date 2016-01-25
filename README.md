@@ -7,12 +7,9 @@
    buildscript {
      repositories {
        jcenter()
-       maven {
-         url "https://plugins.gradle.org/m2/"
-       }
      }
      dependencies {
-       classpath "gradle.plugin.com.lib.logthisplugin:logthis-plugin:0.4.2" 
+       classpath "com.github.luispereira:logthis-plugin:0.4.3"
      }
    }
    
