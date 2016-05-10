@@ -16,16 +16,15 @@
    apply plugin: "com.lib.logthisannotations"   //This will search the annotation and will process them
 
    dependencies {
-       compile 'com.github.luispereira:logthisannotations:0.4.2'
+       debugCompile 'com.github.luispereira:logthisannotations:0.5.0'
+       releaseCompile 'com.github.luispereira:logthisannotations-release:0.5.0'
    }
 ```
 
 ### Usage ###
 In order to activate the Logger you should call the following method on Application
 ```java
- if(BuildConfig.DEBUG) { //This verification is only an example to only call the logger on debug environment
     Logger.init();
- }
 ```
 
 From now on the methods with annotation @LogThis will be logged
