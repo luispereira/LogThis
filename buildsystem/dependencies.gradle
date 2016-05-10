@@ -13,7 +13,7 @@ ext {
 
     //ClassPath
     androidAptVersion = "1.8"
-    gradleVersion = "1.5.0"
+    gradleVersion = "2.1.0"
 
     dependencies = [
             aspectj           : "org.aspectj:aspectjrt:${aspectjVersion}",
