@@ -44,7 +44,8 @@ public class LogAspect {
     @Around("methodAnnotatedWithDebugTrace()")
     public Object weaveAroundLogThisJoinPoint(ProceedingJoinPoint thisJoinPoint) throws Throwable {
         Object returnValue;
-        if(Logger.getInstance() != null && Logger.getInstance().isLoggerEnabled()) {
+        Logger logger = Logger.getInstance();
+        if(logger != null && logger.isLoggerEnabled()) {
             MethodSignature methodSignature = (MethodSignature) thisJoinPoint.getSignature();
             String className = methodSignature.getDeclaringType().getSimpleName();
             String methodName = methodSignature.getName();
@@ -73,32 +74,38 @@ public class LogAspect {
 
     @Before("constructorAnnotatedDebugTrace()")
     public void weaveBeforeLogThisJoinPoint(JoinPoint joinPoint) {
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        String className = methodSignature.getDeclaringType().getSimpleName();
-        String methodName = methodSignature.getName();
-        String[] parameterNames = methodSignature.getParameterNames();
-        Object[] parameterValues = joinPoint.getArgs();
+        Logger logger = Logger.getInstance();
+        if(logger != null && logger.isLoggerEnabled()) {
+            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+            String className = methodSignature.getDeclaringType().getSimpleName();
+            String methodName = methodSignature.getName();
+            String[] parameterNames = methodSignature.getParameterNames();
+            Object[] parameterValues = joinPoint.getArgs();
 
-        Method method = methodSignature.getMethod();
-        LoggerLevel loggerLevel = method.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
+            Method method = methodSignature.getMethod();
+            LoggerLevel loggerLevel = method.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
 
-        StringBuilder builder = Strings.getStringMethodBuilder(methodName, parameterNames, parameterValues);
+            StringBuilder builder = Strings.getStringMethodBuilder(methodName, parameterNames, parameterValues);
 
-        LogThis.log(className, "Method " + builder.toString() + " called", loggerLevel);
+            LogThis.log(className, "Method " + builder.toString() + " called", loggerLevel);
+        }
     }
 
     @Around("set(@com.lib.logthisannotations.annotation.LogThis * *) && args(newVal) && target(t)")
     public void weaveBeforeFieldLogThisJoinPoint(ProceedingJoinPoint joinPoint, Object t, Object newVal) throws Throwable {
-        FieldSignature fs = (FieldSignature) joinPoint.getSignature();
-        String fieldName = fs.getName();
-        Field field = fs.getField();
-        field.setAccessible(true);
-        Object oldVal = field.get(t);
-        LoggerLevel loggerLevel = field.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
-        StringBuilder builder = Strings.getStringFieldBuilder(fieldName, String.valueOf(oldVal), String.valueOf(newVal));
+        Logger logger = Logger.getInstance();
+        if(logger != null && logger.isLoggerEnabled()) {
+            FieldSignature fs = (FieldSignature) joinPoint.getSignature();
+            String fieldName = fs.getName();
+            Field field = fs.getField();
+            field.setAccessible(true);
+            Object oldVal = field.get(t);
+            LoggerLevel loggerLevel = field.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
+            StringBuilder builder = Strings.getStringFieldBuilder(fieldName, String.valueOf(oldVal), String.valueOf(newVal));
 
-        LogThis.log(t.getClass().getName(), "Field " + builder.toString(), loggerLevel);
-        joinPoint.proceed();
+            LogThis.log(t.getClass().getName(), "Field " + builder.toString(), loggerLevel);
+            joinPoint.proceed();
+        }
     }
 }
 
