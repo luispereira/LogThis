@@ -9,7 +9,7 @@
        jcenter()
      }
      dependencies {
-       classpath "com.github.luispereira:logthis-plugin:0.4.3"
+       classpath "com.github.luispereira:logthis-plugin:0.5.0"
      }
    }
    
@@ -103,5 +103,3 @@ public String logThisMethod(String value) {
 
 ### Todo ###
 - Field annotation to log a local variable when modified
-- Provide an api method to write the logs on the sdcard
-- Avoid any code on application class by creating a new module in order to enable the logger
