@@ -1,4 +1,4 @@
-package com.lib.logthisannotations;
+package com.lib.logthisannotations.aspect;
 
 import java.io.File;
 

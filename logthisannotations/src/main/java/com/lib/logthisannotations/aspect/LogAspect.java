@@ -2,8 +2,7 @@ package com.lib.logthisannotations.aspect;
 
 import android.text.TextUtils;
 
-import com.lib.logthisannotations.Logger;
-import com.lib.logthisannotations.internal.LogThis;
+import com.lib.logthisannotations.annotation.LogThis;
 import com.lib.logthisannotations.internal.LoggerLevel;
 import com.lib.logthisannotations.internal.Strings;
 
@@ -53,18 +52,19 @@ public class LogAspect {
             Object[] parameterValues = thisJoinPoint.getArgs();
 
             Method method = methodSignature.getMethod();
-            LoggerLevel loggerLevel = method.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
+            LogThis annotation = method.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class);
+            LoggerLevel loggerLevel = annotation.logger();
 
             Type type = method.getGenericReturnType();
 
             StringBuilder builder = Strings.getStringMethodBuilder(methodName, parameterNames, parameterValues);
 
-            LogThis.log(className, "Method " + builder.toString() + " called", loggerLevel);
+            logger.getLoggerInstance().log(className, "Method " + builder.toString() + " called", loggerLevel, annotation.write());
 
             returnValue = thisJoinPoint.proceed();
 
             if (!TextUtils.equals(type.toString(), VOID_TYPE)) {
-                LogThis.log(className, "Method " + builder.toString() + " returned value ⇢ [" + returnValue + "]", loggerLevel);
+                logger.getLoggerInstance().log(className, "Method " + builder.toString() + " returned logger ⇢ [" + returnValue + "]", loggerLevel, annotation.write());
             }
         }else{
             returnValue = thisJoinPoint.proceed();
@@ -83,11 +83,12 @@ public class LogAspect {
             Object[] parameterValues = joinPoint.getArgs();
 
             Method method = methodSignature.getMethod();
-            LoggerLevel loggerLevel = method.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
+            LogThis annotation = method.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class);
+            LoggerLevel loggerLevel = annotation.logger();
 
             StringBuilder builder = Strings.getStringMethodBuilder(methodName, parameterNames, parameterValues);
 
-            LogThis.log(className, "Method " + builder.toString() + " called", loggerLevel);
+            logger.getLoggerInstance().log(className, "Method " + builder.toString() + " called", loggerLevel, annotation.write());
         }
     }
 
@@ -100,10 +101,11 @@ public class LogAspect {
             Field field = fs.getField();
             field.setAccessible(true);
             Object oldVal = field.get(t);
-            LoggerLevel loggerLevel = field.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class).value();
+            LogThis annotation = field.getAnnotation(com.lib.logthisannotations.annotation.LogThis.class);
+            LoggerLevel loggerLevel = annotation.logger();
             StringBuilder builder = Strings.getStringFieldBuilder(fieldName, String.valueOf(oldVal), String.valueOf(newVal));
 
-            LogThis.log(t.getClass().getName(), "Field " + builder.toString(), loggerLevel);
+            logger.getLoggerInstance().log(t.getClass().getName(), "Field " + builder.toString(), loggerLevel, annotation.write());
             joinPoint.proceed();
         }
     }

@@ -6,9 +6,9 @@ import android.view.View;
 
 import com.lib.logthisannotations.annotation.LogThis;
 import com.lib.logthisannotations.annotation.LogThisClassFields;
-import com.lib.logthisannotations.internal.LoggerLevel;
 
-@LogThisClassFields(LoggerLevel.W)
+//@LogThisClassFields(logger = LoggerLevel.D, write = false)
+@LogThisClassFields(write = false)
 public class MainActivity extends AppCompatActivity {
 
     @LogThis
@@ -40,6 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
 //    @LogThis
     public String logThisReturnMethod() {
-        return "testing return value";
+        return "testing return logger";
     }
 }

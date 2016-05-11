@@ -1,6 +1,6 @@
 package com.lib.logthisannotations.aspect;
 
-import com.lib.logthisannotations.internal.LogThis;
+import com.lib.logthisannotations.annotation.LogThisClassFields;
 import com.lib.logthisannotations.internal.LoggerLevel;
 import com.lib.logthisannotations.internal.Strings;
 
@@ -20,16 +20,19 @@ public class LogThisClassFieldAspect {
 
     @Around("set(* (@com.lib.logthisannotations.annotation.LogThisClassFields *) . *) && args(newVal) && target(t) ")
     public void aroundSetField(ProceedingJoinPoint jp, Object t, Object newVal) throws Throwable{
-        Signature signature = jp.getSignature();
-        String fieldName = signature.getName();
-        Field field = t.getClass().getDeclaredField(fieldName);
-        field.setAccessible(true);
-        Object oldVal = field.get(t);
-        LoggerLevel loggerLevel = t.getClass().getAnnotation(com.lib.logthisannotations.annotation.LogThisClassFields.class).value();
-        StringBuilder builder = Strings.getStringFieldBuilder(fieldName, String.valueOf(oldVal), String.valueOf(newVal));
+        Logger logger = Logger.getInstance();
+        if(logger != null) {
+            Signature signature = jp.getSignature();
+            String fieldName = signature.getName();
+            Field field = t.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            Object oldVal = field.get(t);
+            LogThisClassFields annotation = t.getClass().getAnnotation(LogThisClassFields.class);
+            LoggerLevel loggerLevel = annotation.logger();
+            StringBuilder builder = Strings.getStringFieldBuilder(fieldName, String.valueOf(oldVal), String.valueOf(newVal));
 
-        LogThis.log(t.getClass().getName(), "Field " + builder.toString(), loggerLevel);
-        //TODO compare oldVal with newVal and do sth.
-        jp.proceed();
+            logger.getLoggerInstance().log(t.getClass().getName(), "ClassField " + builder.toString(), loggerLevel, annotation.write());
+            jp.proceed();
+        }
     }
 }
