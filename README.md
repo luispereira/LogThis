@@ -31,7 +31,7 @@ From now on the methods with annotation @LogThis will be logged
 
 
 ```java
-@LogThis(LoggerLevel.V) //The default value is LoggerLevel.D
+@LogThis(LoggerLevel.V) //The default value is LoggerLevel.D 
 public String logThisMethod(String value) {
   //...
   return "value";
@@ -75,6 +75,31 @@ Or in case of a field log:
 ```java
 com.lib.logthis D/Class: Field ⇢ mSampleField -> oldValue=test1 0 & newValue=test2
 ```
+
+Classes fields annotated by @LogThisClassFields will produce the following result:
+```java
+com.lib.logthis W/com.lib.logthis.MainActivity: ClassField ⇢ i -> oldValue=0 & newValue=1
+```
+
+
+### Write to File ###
+
+In order to activate this feature the SDK should be initialized like this:
+```java
+    Logger.init().storeLogs(DIRECTORY_TO_SAVE_THE_LOG);
+```
+
+After this initialization is done the logs will be stored on a file with the name "LogThis.txt" on the specified directory.
+
+Although the user can always avoid to write a determinate log on the annotation by doing:
+```java
+@LogThis(logger=LoggerLevel.V, write=false) //write to false turns off the store for these logs
+public String logThisMethod(String value) {
+  //...
+  return "value";
+ }
+```
+
 
 ### Todo ###
 - Field annotation to log a local variable when modified
