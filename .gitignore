@@ -14,6 +14,8 @@
 .idea/misc.xml
 .idea/modules.xml
 .idea/runConfigurations.xml
+/.idea
+/gradlew
 
 privateKey.asc
 private_key_sender.asc
