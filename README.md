@@ -6,7 +6,7 @@
 ```groovy
    buildscript {
      repositories {
-       jcenter()
+       jcenter()  //or  mavenCentral()
      }
      dependencies {
        classpath "com.github.luispereira:logthis-plugin:0.5.0"
@@ -35,7 +35,7 @@ From now on the methods with annotation @LogThis will be logged
 public String logThisMethod(String value) {
   //...
   return "value";
- }
+}
 
  logThisMethod("test")
 ```
@@ -43,22 +43,19 @@ public String logThisMethod(String value) {
 It is also possible to Log every field change:
 
 ```java
-@LogThis
-public String mSampleField = "test1";
+   @LogThis
+   public String mSampleField = "test1";
+   (...)
 
-...
-
-mSampleField = "test2";
+   mSampleField = "test2";
 ```
 
 Or you can log every field of a class:
 ```java
 @LogThisClassFields(LoggerLevel.I)
 public class SampleClass{
-
    private String mValue;
    public int otherField = 0;
-
 }
 ```
 In this case every field on the class will be logged.
@@ -66,19 +63,19 @@ In this case every field on the class will be logged.
 ### Output ###
 Every time you call the method the follow output will appear:
 ```java
-com.lib.logthis D/Class: Method -> logThisMethod(value="test") called
-com.lib.logthis D/Class: Method -> logThisMethod(value="test") returned value -> [value]
+   com.lib.logthis D/Class: Method -> logThisMethod(value="test") called
+   com.lib.logthis D/Class: Method -> logThisMethod(value="test") returned value -> [value]
 ```
 Method which have the return generic type void will not print the return result.
 
 Or in case of a field log:
 ```java
-com.lib.logthis D/Class: Field ⇢ mSampleField -> oldValue=test1 0 & newValue=test2
+   com.lib.logthis D/Class: Field ⇢ mSampleField -> oldValue=test1 0 & newValue=test2
 ```
 
 Classes fields annotated by @LogThisClassFields will produce the following result:
 ```java
-com.lib.logthis W/com.lib.logthis.MainActivity: ClassField ⇢ i -> oldValue=0 & newValue=1
+   com.lib.logthis W/com.lib.logthis.MainActivity: ClassField ⇢ i -> oldValue=0 & newValue=1
 ```
 
 
